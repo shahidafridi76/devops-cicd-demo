@@ -5,7 +5,7 @@ pipeline {
 
         stage('Clone Repo') {
             steps {
-                git 'https://github.com/shahidafridi76/devops-cicd-demo.git'
+                git branch: 'main', url: 'https://github.com/shahidafridi76/devops-cicd-demo.git'
             }
         }
 
@@ -17,8 +17,10 @@ pipeline {
 
         stage('Run Container') {
             steps {
-                sh 'docker run -d -p 80:80 cicd-demo'
+                sh 'docker rm -f cicd-demo || true'
+                sh 'docker run -d -p 8081:80 --name cicd-demo cicd-demo'
             }
         }
+
     }
 }
